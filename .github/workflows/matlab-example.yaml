@@ -1,0 +1,18 @@
+name: valet-travis-languages-testing/matlab-example
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: matlab-actions/setup-matlab@v1
+      with:
+        release: "${{ matrix.matlab }}"
+    - run: matlab -batch 'results = runtests('IncludeSubfolders',true); assertSuccess(results);'
+    strategy:
+      matrix:
+        matlab:
+        - latest
+        - R2020a
